@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP Hesaplayıcı</title>
+  <script src="/dinamic/Calculate.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class="container mt-5">
+<style>
+  /* Sayfa yüklendiğinde içeriği gizle */
+  body {
+    visibility: hidden;
+  }
+
+  /* JavaScript doğrulama sonrası gösterilecek */
+  body.visible {
+    visibility: visible;
+  }
+
+  body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+</style>
+
+<div class="card p-4 shadow">
+  <h2 class="text-center">IP Hesaplama</h2>
+  <div class="mb-3">
+    <input type="text" id="ip" class="form-control" placeholder="IP adresi girin">
+    <input type="text" id="mask" class="form-control mt-2" placeholder="Subnet Mask değeri girin">
+  </div>
+  <button class="btn btn-primary w-100" onclick="calculate()">Hesapla(GET)</button>
+  <button class="btn btn-primary w-100" onclick="calculatePost()">Hesapla(POST)</button>
+  <div id="result" class="mt-4"></div>
+</div>
+<script>
+  // Kullanıcı girişi kontrolü
+  window.onload = () => {
+    const userID = getCookie("userID"); // Kullanıcı ID'si kontrolü
+
+    if (!userID) {
+      // Uyarı göster ve login sayfasına yönlendir
+      alert("Lütfen giriş yapın.");
+      window.location.href = "/dinamic/logIn.html"; // Giriş sayfasına yönlendirme
+    } else {
+      // Giriş yapılmışsa sayfayı göster
+      document.body.style.visibility = "visible";
+    }
+  };
+
+  // Çerezi almak için yardımcı fonksiyon
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+  }
+
+</script>
+</body>
+</html>

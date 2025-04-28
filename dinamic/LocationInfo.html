@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Konum Bilgisi</title>
+    <link rel="stylesheet" href="LocationInfo.css">
+</head>
+<body>
+<div class="container">
+    <h2>Kullanıcı Konum Bilgisi</h2>
+    <p><strong>Kullanıcı Adı:</strong> <span id="username"></span></p>
+    <p><strong>Şehir:</strong> <span id="city"></span></p>
+    <p><strong>Ülke:</strong> <span id="country"></span></p>
+    <p><strong>Saat Dilimi:</strong> <span id="timezone"></span></p>
+</div>
+
+<script>
+    fetch("/location")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("username").innerText = data.username;
+            document.getElementById("city").innerText = data.city;
+            document.getElementById("country").innerText = data.country;
+            document.getElementById("timezone").innerText = data.timezone;
+        })
+        .catch(error => console.error("Hata:", error));
+</script>
+</body>
+</html>

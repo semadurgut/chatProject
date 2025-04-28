@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <link rel="stylesheet" href="logIn.css">
+</head>
+<body>
+<div class="container">
+    <form id="loginForm">
+        <h2> KAYIT / GİRİŞ </h2>
+        <input type="text" id="username" placeholder="Kullanıcı Adı" required><br>
+        <input type="password" id="password" placeholder="Şifre" required><br>
+        <div class="buttons">
+            <button type="button" id="signInBtn">Sign In</button>
+            <button type="button" id="logInBtn">Log In</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const signInBtn = document.getElementById("signInBtn");
+    const logInBtn = document.getElementById("logInBtn");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+
+    // Kullanıcı Kaydı
+    signInBtn.addEventListener("click", async () => {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!username || !password) {
+            alert("Lütfen kullanıcı adı ve şifre girin.");
+            return;
+        }
+
+        const response = await fetch("/signIn", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+            alert("Kayıt başarılı, şimdi giriş yapabilirsiniz.");
+        } else {
+            alert(await response.text());
+        }
+    });
+
+    // Kullanıcı Girişi
+    logInBtn.addEventListener("click", async () => {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!username || !password) {
+            alert("Lütfen kullanıcı adı ve şifre girin.");
+            return;
+        }
+
+        const response = await fetch("/logIn", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.userID) {
+                // GUID ID cookie olarak saklanır
+                document.cookie = `userID=${data.userID}; path=/; max-age=86400`; // 1 gün boyunca saklanır
+                window.location.href = "options.html";
+            } else {
+                alert("Geçerli bir kullanıcı ID'si alınamadı.");
+            }
+        } else {
+            alert(await response.text());
+        }
+    });
+</script>
+</body>
+</html>

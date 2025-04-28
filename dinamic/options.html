@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seçenekler</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="container">
+  <h2> UYGULAMALAR </h2>
+  <!-- Yönlendirmeler -->
+  <button onclick="window.location.href = '/dinamic/Chat.html'">Chat</button>
+  <button onclick="window.location.href = '/dinamic/Calculate.html'">Calculator</button>
+  <button onclick="window.location.href = '/dinamic/LocationInfo.html'">Location Info</button>
+  <button id="logoutBtn">Çıkış Yap</button> 
+
+</div>
+<script>
+  // Kullanıcı girişi kontrolü
+  window.onload = () => {
+    const userID = getCookie("userID"); // Kullanıcı ID'si kontrolü
+
+    if (!userID) {
+      // Uyarı göster ve login sayfasına yönlendir
+      alert("Lütfen giriş yapın.");
+      window.location.href = "/dinamic/logIn.html"; // Giriş sayfasına yönlendirme
+    } else {
+      // Giriş yapılmışsa sayfayı göster
+      document.body.style.visibility = "visible";
+    }
+  };
+
+  // Çerezi almak için yardımcı fonksiyon
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+  }
+
+  // Çerezi silme fonksiyonu
+  function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
+
+  // Oturumu Sonlandırma
+  document.getElementById("logoutBtn").onclick = () => {
+    if (confirm("Oturumu sonlandırmak istediğinize emin misiniz?")) {
+      deleteCookie("userID");  // Cookie'yi sil
+      window.location.href = "/dinamic/logIn.html";  // Giriş sayfasına yönlendir
+    }
+  };
+
+</script>
+</body>
+</html>
