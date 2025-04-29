@@ -16,7 +16,7 @@
 </div>
 
 <script>
-    fetch("/location")
+    fetch(`${document.location.protocol}//${document.location.host}/location`)
         .then(response => response.json())
         .then(data => {
             document.getElementById("username").innerText = data.username;
