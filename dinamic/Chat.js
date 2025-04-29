@@ -138,7 +138,7 @@ window.onload = async() => {
         window.location.href = "/dinamic/logIn.html"; // Giriş sayfasına yönlendirme
     }
 
-    fetch(`${document.location.protocol}//${document.location.host}/loadMessages`)
+    fetch(`/loadMessages`)
         .then(response => response.json())
         .then(messages => {
             messages.forEach(msg => {
